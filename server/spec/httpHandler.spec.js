@@ -6,6 +6,8 @@ const server = require('./mockServer');
 
 const httpHandler = require('../js/httpHandler');
 const queue = require('../js/messageQueue');
+// Need to have this line, otherwise the queue won't get initialized.
+httpHandler.initialize(queue);
 
 describe('server responses', () => {
 
@@ -35,8 +37,9 @@ describe('server responses', () => {
     // HTTP status code: 2XX - successful
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
-    // For GET request, we are going to expect a response that contains swim command
-    expect(res._data.toString()).to.contain(commands);
+    // For GET request, we are going to expect a command that equals to the swim command that we push into the queue.
+    expect(res._data.toString()).to.equal(commands[index]);
+    expect(commands).to.contain(res._data.toString());
     done();
   });
 
