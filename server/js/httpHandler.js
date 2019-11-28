@@ -31,9 +31,14 @@ module.exports.router = (req, res, next = () => { }) => {
     // This method must only be called once on a message and it must be called before response.end() is called.
     res.writeHead(200, headers);
     // response.end([data[, encoding]][, callback]): this method signals to the server that all of the response headers and body have been sent; that server should consider this message complete.
-    // response.end() MUST be called on each response.
-    // If callback is specified, it will be called when the response stream is finished.
-    res.end(messageQueue.dequeue()); // data is a string or a Buffer
+    if (messageQueue) {
+      // response.end() MUST be called on each response.
+      // If callback is specified, it will be called when the response stream is finished.
+      res.end(messageQueue.dequeue()); // data is a string or a Buffer
+    } else {
+      res.end();
+    }
+
     // The next() function is not a part of the Node.js or Express API, but is the third argument that is passed to the middleware function. The next() function could be named anything, but by convention it is always named “next”. To avoid confusion, always use this convention.
     // invoke next() here at the end of a request to help with testing!
     next();
