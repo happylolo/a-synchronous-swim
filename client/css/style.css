@@ -12,6 +12,7 @@ h3 {
   width: 622px;
 }
 .background {
+  /* Go to server folder and run `cp spec/water-lg.jpg ./background.jpg` in the terminal to copy the image in the spec folder to this path and attach this background image to the html */
   background-image: url(http://127.0.0.1:3000/background.jpg);
 }
 .team {
