@@ -11,6 +11,7 @@ const httpHandler = require('../js/httpHandler');
 describe('server responses', () => {
 
   it('should respond to a OPTIONS request', (done) => {
+    // The HTTP OPTIONS method is used to describe the communication options for the target resource.
     let {req, res} = server.mock('/', 'OPTIONS');
 
     httpHandler.router(req, res);
@@ -23,6 +24,16 @@ describe('server responses', () => {
 
   it('should respond to a GET request for a swim command', (done) => {
     // write your test here
+    let {req, res} = server.mock('/', 'GET');
+
+    const commands = ['up', 'down', 'left', 'right'];
+    httpHandler.router(req, res);
+    // HTTP status code: 2XX - successful
+    expect(res._responseCode).to.equal(200);
+    expect(res._ended).to.equal(true);
+    // For GET request, we are going to expect a response that contains swim command
+    expect(commands).to.contain(res._data.toString());
+
     done();
   });
 

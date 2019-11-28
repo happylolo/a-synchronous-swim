@@ -1,0 +1,4 @@
+# Setup
+1. This repo contains two programs -- one that lives in the `client` folder and one that lives in the `server` folder. Both programs are started from the terminal so you'll need two terminal windows to run these programs. Each program has its own `package.json` file and must have its dependencies installed separately. To install the dependencies, run `npm install` for both the two programs.
+2. Both programs can be started with `npm start` in development mode. This runs the client using `live-server` so that code changes automatically refresh the browser. The server runs using `nodemon`, so that code changes cause automatic reloads.
+3. When you are ready to get more interactive, start the server using `npm run server` -- this will run the server without nodemon. When running using `nodemon`, you'll need to press enter after each swim command (both arrow keys and written commands). Without nodemon, arrow commands will behave more responsively.
