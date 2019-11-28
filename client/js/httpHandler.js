@@ -6,6 +6,18 @@
   // TODO: build the swim command fetcher here
   //
 
+  // For testing purpose, attach the fetchCommand to window directly.
+  window.fetchCommand = () => {
+    $.ajax({
+      type: 'GET',
+      url: serverUrl,
+      success: (command) => {
+        // To test this fetchCommand, we can type fetchCommand() in the Chrome console and see if we get random command correctly. Don't forget to include the script in index.html otherwise the browser won't load the script.
+        console.log(command);
+      }
+    })
+  }
+
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
