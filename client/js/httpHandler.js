@@ -1,5 +1,4 @@
 (function() {
-
   const serverUrl = 'http://127.0.0.1:3000';
 
   const fetchCommand = () => {
@@ -12,18 +11,18 @@
       complete: () => {
         // Compared with put setTimeout outside the AJAX request, this setTimeout will only issue another AJAX request 500ms after the current one completes. One has to complete before the next one gets kicked off.
         setTimeout(fetchCommand, 2000);
-      }
+      },
     })
   };
 
   setTimeout(fetchCommand, 0);
 
   /////////////////////////////////////////////////////////////////////
-  // The ajax file uplaoder is provided for your convenience!
+  // The ajax file uploader is provided for your convenience!
   // Note: remember to fix the URL below.
   /////////////////////////////////////////////////////////////////////
 
-  const ajaxFileUplaod = (file) => {
+  const ajaxFileUpload = (file) => {
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
@@ -55,7 +54,6 @@
       return;
     }
 
-    ajaxFileUplaod(file);
+    ajaxFileUpload(file);
   });
-
 })();
