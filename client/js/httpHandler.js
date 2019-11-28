@@ -15,7 +15,7 @@
     })
   };
 
-  fetchCommand();
+  setTimeout(fetchCommand, 0);
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uploader is provided for your convenience!
