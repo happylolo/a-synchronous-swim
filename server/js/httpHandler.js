@@ -15,7 +15,7 @@ module.exports.initialize = (queue) => {
 // Node.js Documentation: https://nodejs.org/api/http.html
 // req and res object in Node.js: http://www.murvinlai.com/req-and-res-in-nodejs.html
 module.exports.router = (req, res, next = () => { }) => {
-  console.log('Serving request type ' + req.method + ' for url ' + req.url);
+  // console.log('Serving request type ' + req.method + ' for url ' + req.url);
 
   if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);

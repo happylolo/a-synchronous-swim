@@ -2,18 +2,21 @@
 
   const serverUrl = 'http://127.0.0.1:3000';
 
-  fetchCommand = () => {
+  const fetchCommand = () => {
     $.ajax({
       type: 'GET',
       url: serverUrl,
       success: (command) => {
         SwimTeam.move(command);
+      },
+      complete: () => {
+        // Compared with put setTimeout outside the AJAX request, this setTimeout will only issue another AJAX request 500ms after the current one completes. One has to complete before the next one gets kicked off.
+        setTimeout(fetchCommand, 2000);
       }
     })
-  }
+  };
 
-  // setInterval doesn't care if there's any pending request
-  setInterval(fetchCommand, 500);
+  setTimeout(fetchCommand, 0);
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
