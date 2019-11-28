@@ -45,6 +45,7 @@ describe('server responses', () => {
   });
 
   it('should respond with 404 to a GET request for a missing background image', (done) => {
+    // Examine an imge that doesn't exist, we should get 404 for that.
     httpHandler.backgroundImageFile = path.join('.', 'spec', 'missing.jpg');
     // Pick a path for the background image, we will going to use this path in the client, server, and test. All these three things need to match and use the same url.
     let {req, res} = server.mock('/background.jpg', 'GET');
@@ -58,7 +59,7 @@ describe('server responses', () => {
 
   it('should respond with 200 to a GET request for a present background image', (done) => {
     // write your test here
-    httpHandler.backgroundImageFile = path.join('.', 'spec', 'background.jpg');
+    httpHandler.backgroundImageFile = path.join('.', 'spec', 'water-lg.jpg');
     let {req, res} = server.mock('/background.jpg', 'GET');
 
     httpHandler.router(req, res, () => {

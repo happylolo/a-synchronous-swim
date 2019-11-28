@@ -42,9 +42,19 @@ module.exports.router = (req, res, next = () => { }) => {
     }
 
     if (req.url === '/background.jpg') {
-      res.writeHead(404, headers);
-      res.end();
-      next();
+      // fs.readFile(path[, options], callback): https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback
+      fs.readFile(module.exports.backgroundImageFile, (err, fileData) => {
+        if (err) {
+          res.writeHead(404, headers);
+        } else {
+          res.writeHead(200, headers);
+          // Encode the binary data.
+          res.write(fileData, 'binary');
+        }
+
+        res.end();
+        next();
+      });
     }
   }
 };
