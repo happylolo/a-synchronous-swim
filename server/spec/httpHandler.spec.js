@@ -17,6 +17,7 @@ describe('server responses', () => {
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
+    console.log(res._data.toString());
     expect(res._data.toString()).to.be.empty;
 
     done();
