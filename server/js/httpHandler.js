@@ -59,8 +59,25 @@ module.exports.router = (req, res, next = () => { }) => {
   }
 
   if (req.method === 'POST' && req.url === '/background.jpg') {
-    res.writeHead(201, headers);
-    res.end();
-    next();
+    // Reference: https://nodejs.org/es/docs/guides/anatomy-of-an-http-transaction/
+    // The chunk emitted in each 'data' event is a 'Buffer'. Here we are allocating an empty Buffer
+    var fileData = Buffer.alloc(0);
+
+    // Chunk is a Buffer object. Here we catch each chunk of fileData and concat the existing fileData along with the chunk. And this has to be an array.
+    req.on('data', (chunk) => {
+      fileData = Buffer.concat([fileData, chunk]);
+    });
+
+    // Once all the chunks have been received, there will be an 'end' event get emitted.
+    req.on('end', () => {
+      // Serialization format: extract the fileData from a multipart. Refer to the multipartUtils.js file, there's a function called getFile and it takes a buffer.
+      let file = multipart.getFile(fileData);
+
+      fs.writeFile(module.exports.backgroundImageFile, file.data, (err) => {
+        res.writeHead(err ? 400 : 201, headers);
+        res.end();
+        next();
+      });
+    });
   }
 };

@@ -25,6 +25,7 @@
   const ajaxFileUpload = (file) => {
     var formData = new FormData();
     formData.append('file', file);
+    // The url in the client AJAX must match the url in the server.
     $.ajax({
       type: 'POST',
       data: formData,

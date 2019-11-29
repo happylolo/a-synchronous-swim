@@ -72,6 +72,7 @@ describe('server responses', () => {
   var postTestFile = path.join('.', 'spec', 'water-lg.jpg');
 
   it('should respond to a POST request to save a background image', (done) => {
+    // Just test if the server respond correctly with some file data, didn't test if we saved the image to the server
     fs.readFile(postTestFile, (err, fileData) => {
       httpHandler.backgroundImageFile = path.join('.', 'spec', 'temp.jpg');
       let {req, res} = server.mock('/background.jpg', 'POST', fileData);
@@ -84,13 +85,14 @@ describe('server responses', () => {
     });
   });
 
-  xit('should send back the previously saved image', (done) => {
+  it('should send back the previously saved image', (done) => {
+    // Test if we are saving the file to the server. Use the POST request to send the image to the server first, and then turn around and make a GET request from the server. If the file exists, it will send back a response with that file.
     fs.readFile(postTestFile, (err, fileData) => {
       httpHandler.backgroundImageFile = path.join('.', 'spec', 'temp.jpg');
-      let post = server.mock('FILL_ME_IN', 'POST', fileData);
+      let post = server.mock('/background.jpg', 'POST', fileData);
 
       httpHandler.router(post.req, post.res, () => {
-        let get = server.mock('FILL_ME_IN', 'GET');
+        let get = server.mock('/background.jpg', 'GET');
         httpHandler.router(get.req, get.res, () => {
           expect(Buffer.compare(fileData, get.res._data)).to.equal(0);
           done();
