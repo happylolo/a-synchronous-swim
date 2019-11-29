@@ -69,7 +69,7 @@ describe('server responses', () => {
     });
   });
 
-  var postTestFile = path.join('.', 'spec', 'water-lg.jpg');
+  var postTestFile = path.join('.', 'spec', 'water-lg.multipart');
 
   it('should respond to a POST request to save a background image', (done) => {
     // Just test if the server respond correctly with some file data, didn't test if we saved the image to the server
@@ -94,7 +94,12 @@ describe('server responses', () => {
       httpHandler.router(post.req, post.res, () => {
         let get = server.mock('/background.jpg', 'GET');
         httpHandler.router(get.req, get.res, () => {
-          expect(Buffer.compare(fileData, get.res._data)).to.equal(0);
+          const multipart = require('../js/multipartUtils');
+          // Extract multipart from the fileData that we read at the very beginning
+          let file = multipart.getFile(fileData);
+          // get.res._data is the multipart image
+          // Compare the file data from multipart with the data we received from the server. Remember the server is not sending a multipart file back, it's sending an image. So we are loading a multipart file from our tests, sending it to the server. The server is extracting the image and writing it to the hard drive.
+          expect(Buffer.compare(file.data, get.res._data)).to.equal(0);
           done();
         });
       });
