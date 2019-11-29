@@ -29,7 +29,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: '/background.jpg',
+      url: serverUrl + '/background.jpg',
       cache: false,
       contentType: false,
       processData: false,
